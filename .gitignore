@@ -79,3 +79,10 @@ typings/
 # Firebase
 .firebaserc
 
+### https://raw.github.com/github/gitignore/c68eb91e0a72ca1efba128c33de9caea41281f19/Global/VisualStudioCode.gitignore
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
