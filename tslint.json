@@ -12,7 +12,8 @@
     ],
     "no-console": false,
     "interface-name": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "object-literal-sort-keys": false
   },
   "rulesDirectory": ["tslint-plugin-prettier"]
 }
