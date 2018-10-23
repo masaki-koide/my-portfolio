@@ -32,6 +32,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     ...bindActionCreators({ incrementCount }, dispatch),
     async getQiitaItems() {
+      dispatch(setQiitaItems.started())
       const items = await wrapFetch(
         'https://qiita.com/api/v2/authenticated_user/items?per_page=5',
         {
@@ -41,7 +42,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         }
       )
       if (items.json && !items.error) {
-        dispatch(setQiitaItems(items.json))
+        dispatch(setQiitaItems.done({ result: items.json }))
+      } else {
+        dispatch(setQiitaItems.failed({ error: items.error }))
       }
     }
   }

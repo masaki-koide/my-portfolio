@@ -16,7 +16,9 @@ const initialState: AppState = {
 
 const actionCreator = actionCreatorFactory()
 export const incrementCount = actionCreator('increment')
-export const setQiitaItems = actionCreator<any[]>('setQiitaItems')
+export const setQiitaItems = actionCreator.async<void, any[], Error>(
+  'setQiitaItems'
+)
 
 export const reducer = reducerWithInitialState<AppState>(initialState)
   .case(incrementCount, state => {
@@ -25,10 +27,22 @@ export const reducer = reducerWithInitialState<AppState>(initialState)
       count: ++state.count
     }
   })
-  .case(setQiitaItems, (state, payload) => {
+  .case(setQiitaItems.started, state => {
     return {
       ...state,
-      qiitaItems: payload
+      qiitaItems: [{ id: 'started', title: '取得中' }]
+    }
+  })
+  .case(setQiitaItems.done, (state, { result }) => {
+    return {
+      ...state,
+      qiitaItems: result
+    }
+  })
+  .case(setQiitaItems.failed, (state, { error }) => {
+    return {
+      ...state,
+      qiitaItems: [{ id: 'failed', title: error.message }]
     }
   })
 
