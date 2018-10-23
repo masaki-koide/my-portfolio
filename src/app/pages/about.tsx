@@ -1,12 +1,14 @@
+import * as querystring from 'querystring'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
 import App from '../components/App'
-import { AppState, incrementCount, setQiitaItems } from '../store'
+import { AppState, getNoteItems, getQiitaItems, incrementCount } from '../store'
 
-const mapStateToProps = ({ count, qiitaItems }: AppState) => ({
+const mapStateToProps = ({ count, qiitaItems, noteItems }: AppState) => ({
   count,
-  qiitaItems
+  qiitaItems,
+  noteItems
 })
 
 interface APIResponse {
@@ -32,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     ...bindActionCreators({ incrementCount }, dispatch),
     async getQiitaItems() {
-      dispatch(setQiitaItems.started())
+      dispatch(getQiitaItems.started())
       const items = await wrapFetch(
         'https://qiita.com/api/v2/authenticated_user/items?per_page=5',
         {
@@ -42,9 +44,27 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         }
       )
       if (items.json && !items.error) {
-        dispatch(setQiitaItems.done({ result: items.json }))
+        dispatch(getQiitaItems.done({ result: items.json }))
       } else {
-        dispatch(setQiitaItems.failed({ error: items.error }))
+        dispatch(getQiitaItems.failed({ error: items.error }))
+      }
+    },
+    async getNoteItems() {
+      dispatch(getNoteItems.started())
+      const qs = querystring.stringify({
+        q:
+          'select * from feed where url = "https://note.mu/mar_key/rss" limit 5',
+        format: 'json'
+      })
+      const items = await wrapFetch(
+        `https://query.yahooapis.com/v1/public/yql?${qs}`
+      )
+      console.log(items)
+      if (items.json && !items.error) {
+        const result = [].concat(items.json.query.results.item)
+        dispatch(getNoteItems.done({ result }))
+      } else {
+        dispatch(getNoteItems.failed({ error: items.error }))
       }
     }
   }
@@ -53,13 +73,16 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 type Props = AppState & {
   incrementCount: () => void
   getQiitaItems: () => Promise<any>
+  getNoteItems: () => Promise<any>
 }
 
 const about: React.SFC<Props> = ({
   count,
   incrementCount,
   getQiitaItems,
-  qiitaItems
+  qiitaItems,
+  getNoteItems,
+  noteItems
 }) => (
   <App>
     <p>About Page</p>
@@ -68,7 +91,25 @@ const about: React.SFC<Props> = ({
     <button onClick={getQiitaItems}>おせよ</button>
     <ul>
       {qiitaItems.map(item => {
-        return <li key={item.id}>{item.title}</li>
+        return (
+          <li key={item.id}>
+            <a href={item.url} target="_blank">
+              {item.title}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+    <button onClick={getNoteItems}>おしていただきたい</button>
+    <ul>
+      {noteItems.map(item => {
+        return (
+          <li key={item.guid}>
+            <a href={item.link} target="_blank">
+              {item.title}
+            </a>
+          </li>
+        )
       })}
     </ul>
   </App>

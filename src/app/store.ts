@@ -7,17 +7,22 @@ import { reducerWithInitialState } from 'typescript-fsa-reducers'
 export interface AppState {
   count: number
   qiitaItems: any[]
+  noteItems: any[]
 }
 
 const initialState: AppState = {
   count: 0,
-  qiitaItems: []
+  qiitaItems: [],
+  noteItems: []
 }
 
 const actionCreator = actionCreatorFactory()
 export const incrementCount = actionCreator('increment')
-export const setQiitaItems = actionCreator.async<void, any[], Error>(
-  'setQiitaItems'
+export const getQiitaItems = actionCreator.async<void, any[], Error>(
+  'getQiitaItems'
+)
+export const getNoteItems = actionCreator.async<void, any[], Error>(
+  'getNoteItems'
 )
 
 export const reducer = reducerWithInitialState<AppState>(initialState)
@@ -27,22 +32,28 @@ export const reducer = reducerWithInitialState<AppState>(initialState)
       count: ++state.count
     }
   })
-  .case(setQiitaItems.started, state => {
+  .case(getQiitaItems.started, state => {
     return {
       ...state,
       qiitaItems: [{ id: 'started', title: '取得中' }]
     }
   })
-  .case(setQiitaItems.done, (state, { result }) => {
+  .case(getQiitaItems.done, (state, { result }) => {
     return {
       ...state,
       qiitaItems: result
     }
   })
-  .case(setQiitaItems.failed, (state, { error }) => {
+  .case(getQiitaItems.failed, (state, { error }) => {
     return {
       ...state,
       qiitaItems: [{ id: 'failed', title: error.message }]
+    }
+  })
+  .case(getNoteItems.done, (state, { result }) => {
+    return {
+      ...state,
+      noteItems: result
     }
   })
 
