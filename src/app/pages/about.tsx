@@ -31,7 +31,7 @@ const wrapFetch = (
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     ...bindActionCreators({ incrementCount }, dispatch),
-    async api() {
+    async getQiitaItems() {
       const items = await wrapFetch(
         'https://qiita.com/api/v2/authenticated_user/items?per_page=5',
         {
@@ -49,20 +49,20 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 type Props = AppState & {
   incrementCount: () => void
-  api: () => Promise<any>
+  getQiitaItems: () => Promise<any>
 }
 
 const about: React.SFC<Props> = ({
   count,
   incrementCount,
-  api,
+  getQiitaItems,
   qiitaItems
 }) => (
   <App>
     <p>About Page</p>
     <button onClick={incrementCount}>おしてね</button>
     <p>{count}</p>
-    <button onClick={api}>おせよ</button>
+    <button onClick={getQiitaItems}>おせよ</button>
     <ul>
       {qiitaItems.map(item => {
         return <li key={item.id}>{item.title}</li>
