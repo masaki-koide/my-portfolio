@@ -1,9 +1,17 @@
+import ApolloClient from 'apollo-boost'
+import gql from 'graphql-tag'
 import * as querystring from 'querystring'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
 import App from '../components/App'
-import { AppState, getNoteItems, getQiitaItems, incrementCount } from '../store'
+import {
+  AppState,
+  getNoteItems,
+  getQiitaItems,
+  gTest,
+  incrementCount
+} from '../store'
 
 const mapStateToProps = ({ count, qiitaItems, noteItems }: AppState) => ({
   count,
@@ -29,6 +37,34 @@ const wrapFetch = (
       return { error }
     })
 }
+
+const client = new ApolloClient({
+  uri: 'https://api.github.com/graphql',
+  request: async operation => {
+    operation.setContext({
+      headers: {
+        authorization: `Bearer ${
+          process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
+        }`
+      }
+    })
+  }
+})
+
+const query = gql`
+  query {
+    user(login: "masaki-koide") {
+      repositories(first: 5, orderBy: { field: CREATED_AT, direction: DESC }) {
+        edges {
+          node {
+            name
+            url
+          }
+        }
+      }
+    }
+  }
+`
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
@@ -66,6 +102,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       } else {
         dispatch(getNoteItems.failed({ error: items.error }))
       }
+    },
+    async graph() {
+      const result = await client.query({
+        query
+      })
+      dispatch(gTest.done({ result }))
     }
   }
 }
@@ -112,6 +154,7 @@ const about: React.SFC<Props> = ({
         )
       })}
     </ul>
+    <button>おすなよ</button>
   </App>
 )
 

@@ -8,12 +8,14 @@ export interface AppState {
   count: number
   qiitaItems: any[]
   noteItems: any[]
+  gTest: any
 }
 
 const initialState: AppState = {
   count: 0,
   qiitaItems: [],
-  noteItems: []
+  noteItems: [],
+  gTest: null
 }
 
 const actionCreator = actionCreatorFactory()
@@ -24,6 +26,7 @@ export const getQiitaItems = actionCreator.async<void, any[], Error>(
 export const getNoteItems = actionCreator.async<void, any[], Error>(
   'getNoteItems'
 )
+export const gTest = actionCreator.async<void, any, Error>('gTest')
 
 export const reducer = reducerWithInitialState<AppState>(initialState)
   .case(incrementCount, state => {
@@ -54,6 +57,12 @@ export const reducer = reducerWithInitialState<AppState>(initialState)
     return {
       ...state,
       noteItems: result
+    }
+  })
+  .case(gTest.done, (state, { result }) => {
+    return {
+      ...state,
+      gTest: result
     }
   })
 
