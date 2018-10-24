@@ -9,6 +9,11 @@ const Header: React.SFC<{ pathname?: string }> = ({ pathname }) => (
     <Link href="/about">
       <a className={pathname === '/about' ? 'is-active' : ''}>About</a>
     </Link>
+    <Link href="/materialui">
+      <a className={pathname === '/materialui' ? 'is-active' : ''}>
+        MaterialUI
+      </a>
+    </Link>
   </header>
 )
 
