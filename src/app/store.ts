@@ -9,13 +9,15 @@ export interface AppState {
   qiitaItems: any[]
   noteItems: any[]
   gitHubItems: any[]
+  hatenaBlogItems: any[]
 }
 
 const initialState: AppState = {
   count: 0,
   qiitaItems: [],
   noteItems: [],
-  gitHubItems: []
+  gitHubItems: [],
+  hatenaBlogItems: []
 }
 
 const actionCreator = actionCreatorFactory()
@@ -28,6 +30,9 @@ export const getNoteItems = actionCreator.async<void, any[], Error>(
 )
 export const getGitHubItems = actionCreator.async<void, any[], Error>(
   'getGitHubItems'
+)
+export const getHatenaBlogItems = actionCreator.async<void, any[], Error>(
+  'getHatenaBlogItems'
 )
 
 export const reducer = reducerWithInitialState<AppState>(initialState)
@@ -65,6 +70,12 @@ export const reducer = reducerWithInitialState<AppState>(initialState)
     return {
       ...state,
       gitHubItems: result
+    }
+  })
+  .case(getHatenaBlogItems.done, (state, { result }) => {
+    return {
+      ...state,
+      hatenaBlogItems: result
     }
   })
 

@@ -8,6 +8,7 @@ import App from '../components/App'
 import {
   AppState,
   getGitHubItems,
+  getHatenaBlogItems,
   getNoteItems,
   getQiitaItems,
   incrementCount
@@ -17,12 +18,14 @@ const mapStateToProps = ({
   count,
   qiitaItems,
   noteItems,
-  gitHubItems
+  gitHubItems,
+  hatenaBlogItems
 }: AppState) => ({
   count,
   qiitaItems,
   noteItems,
-  gitHubItems
+  gitHubItems,
+  hatenaBlogItems
 })
 
 interface APIResponse {
@@ -99,7 +102,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       const items = await wrapFetch(
         `https://query.yahooapis.com/v1/public/yql?${qs}`
       )
-      console.log(items)
       if (items.json && !items.error) {
         const result = [].concat(items.json.query.results.item)
         dispatch(getNoteItems.done({ result }))
@@ -114,15 +116,32 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(
         getGitHubItems.done({ result: result.data.user.repositories.edges })
       )
+    },
+    async getHatenaBlogItems() {
+      const qs = querystring.stringify({
+        q:
+          'select * from feed where url = "https://receiptnoura.hatenablog.jp/rss" limit 5',
+        format: 'json'
+      })
+      const items = await wrapFetch(
+        `https://query.yahooapis.com/v1/public/yql?${qs}`
+      )
+      if (items.json && !items.error) {
+        const result = [].concat(items.json.query.results.item)
+        dispatch(getHatenaBlogItems.done({ result }))
+      }
     }
   }
 }
 
+type APIRequestFunc = () => Promise<any>
+
 type Props = AppState & {
   incrementCount: () => void
-  getQiitaItems: () => Promise<any>
-  getNoteItems: () => Promise<any>
-  getGitHubItems: () => Promise<any>
+  getQiitaItems: APIRequestFunc
+  getNoteItems: APIRequestFunc
+  getGitHubItems: APIRequestFunc
+  getHatenaBlogItems: APIRequestFunc
 }
 
 const about: React.SFC<Props> = ({
@@ -133,7 +152,9 @@ const about: React.SFC<Props> = ({
   getNoteItems,
   noteItems,
   getGitHubItems,
-  gitHubItems
+  gitHubItems,
+  getHatenaBlogItems,
+  hatenaBlogItems
 }) => (
   <App>
     <p>About Page</p>
@@ -170,6 +191,18 @@ const about: React.SFC<Props> = ({
           <li key={item.node.url}>
             <a href={item.node.url} target="_blank">
               {item.node.name}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
+    <button onClick={getHatenaBlogItems}>おしてもいいよ</button>
+    <ul>
+      {hatenaBlogItems.map(item => {
+        return (
+          <li key={item.guid.content}>
+            <a href={item.link} target="_blank">
+              {item.title}
             </a>
           </li>
         )
