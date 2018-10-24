@@ -7,16 +7,22 @@ import { bindActionCreators, Dispatch } from 'redux'
 import App from '../components/App'
 import {
   AppState,
+  getGitHubItems,
   getNoteItems,
   getQiitaItems,
-  gTest,
   incrementCount
 } from '../store'
 
-const mapStateToProps = ({ count, qiitaItems, noteItems }: AppState) => ({
+const mapStateToProps = ({
   count,
   qiitaItems,
-  noteItems
+  noteItems,
+  gitHubItems
+}: AppState) => ({
+  count,
+  qiitaItems,
+  noteItems,
+  gitHubItems
 })
 
 interface APIResponse {
@@ -43,9 +49,7 @@ const client = new ApolloClient({
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `Bearer ${
-          process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN
-        }`
+        authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`
       }
     })
   }
@@ -103,11 +107,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         dispatch(getNoteItems.failed({ error: items.error }))
       }
     },
-    async graph() {
-      const result = await client.query({
+    async getGitHubItems() {
+      const result = await client.query<any>({
         query
       })
-      dispatch(gTest.done({ result }))
+      dispatch(
+        getGitHubItems.done({ result: result.data.user.repositories.edges })
+      )
     }
   }
 }
@@ -116,6 +122,7 @@ type Props = AppState & {
   incrementCount: () => void
   getQiitaItems: () => Promise<any>
   getNoteItems: () => Promise<any>
+  getGitHubItems: () => Promise<any>
 }
 
 const about: React.SFC<Props> = ({
@@ -124,7 +131,9 @@ const about: React.SFC<Props> = ({
   getQiitaItems,
   qiitaItems,
   getNoteItems,
-  noteItems
+  noteItems,
+  getGitHubItems,
+  gitHubItems
 }) => (
   <App>
     <p>About Page</p>
@@ -154,7 +163,18 @@ const about: React.SFC<Props> = ({
         )
       })}
     </ul>
-    <button>おすなよ</button>
+    <button onClick={getGitHubItems}>おすなよ</button>
+    <ul>
+      {gitHubItems.map(item => {
+        return (
+          <li key={item.node.url}>
+            <a href={item.node.url} target="_blank">
+              {item.node.name}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
   </App>
 )
 
