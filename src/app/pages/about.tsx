@@ -1,9 +1,9 @@
 import ApolloClient from 'apollo-boost'
 import gql from 'graphql-tag'
-import * as querystring from 'querystring'
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators, Dispatch } from 'redux'
+import * as API from '../api'
 import App from '../components/App'
 import {
   AppState,
@@ -27,25 +27,6 @@ const mapStateToProps = ({
   gitHubItems,
   hatenaBlogItems
 })
-
-interface APIResponse {
-  json?: any
-  error?: any
-}
-
-const wrapFetch = (
-  input: RequestInfo,
-  init?: RequestInit | undefined
-): Promise<APIResponse> => {
-  return fetch(input, init)
-    .then(response => response.json())
-    .then(json => {
-      return { json }
-    })
-    .catch(error => {
-      return { error }
-    })
-}
 
 const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
@@ -78,14 +59,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     ...bindActionCreators({ incrementCount }, dispatch),
     async getQiitaItems() {
       dispatch(getQiitaItems.started())
-      const items = await wrapFetch(
-        'https://qiita.com/api/v2/authenticated_user/items?per_page=5',
-        {
-          headers: {
-            Authorization: `Bearer ${process.env.QIITA_ACCESS_TOKEN}`
-          }
-        }
-      )
+      const items = await API.getQiitaItems()
       if (items.json && !items.error) {
         dispatch(getQiitaItems.done({ result: items.json }))
       } else {
@@ -94,14 +68,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     },
     async getNoteItems() {
       dispatch(getNoteItems.started())
-      const qs = querystring.stringify({
-        q:
-          'select * from feed where url = "https://note.mu/mar_key/rss" limit 5',
-        format: 'json'
-      })
-      const items = await wrapFetch(
-        `https://query.yahooapis.com/v1/public/yql?${qs}`
-      )
+      const items = await API.getNoteItems()
       if (items.json && !items.error) {
         const result = [].concat(items.json.query.results.item)
         dispatch(getNoteItems.done({ result }))
@@ -118,14 +85,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       )
     },
     async getHatenaBlogItems() {
-      const qs = querystring.stringify({
-        q:
-          'select * from feed where url = "https://receiptnoura.hatenablog.jp/rss" limit 5',
-        format: 'json'
-      })
-      const items = await wrapFetch(
-        `https://query.yahooapis.com/v1/public/yql?${qs}`
-      )
+      const items = await API.getHatenaBlogItems()
       if (items.json && !items.error) {
         const result = [].concat(items.json.query.results.item)
         dispatch(getHatenaBlogItems.done({ result }))
