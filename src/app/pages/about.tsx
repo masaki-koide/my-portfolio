@@ -2,7 +2,7 @@ import ApolloClient from 'apollo-boost'
 import gql from 'graphql-tag'
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators, Dispatch } from 'redux'
+import { Dispatch } from 'redux'
 import * as API from '../api'
 import App from '../components/App'
 import {
@@ -54,73 +54,73 @@ const query = gql`
   }
 `
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return {
-    ...bindActionCreators({ incrementCount }, dispatch),
-    async getQiitaItems() {
-      dispatch(getQiitaItems.started())
-      const items = await API.getQiitaItems()
-      if (items.json && !items.error) {
-        dispatch(getQiitaItems.done({ result: items.json }))
-      } else {
-        dispatch(getQiitaItems.failed({ error: items.error }))
-      }
-    },
-    async getNoteItems() {
-      dispatch(getNoteItems.started())
-      const items = await API.getNoteItems()
-      if (items.json && !items.error) {
-        const result = [].concat(items.json.query.results.item)
-        dispatch(getNoteItems.done({ result }))
-      } else {
-        dispatch(getNoteItems.failed({ error: items.error }))
-      }
-    },
-    async getGitHubItems() {
-      const result = await client.query<any>({
-        query
-      })
-      dispatch(
-        getGitHubItems.done({ result: result.data.user.repositories.edges })
-      )
-    },
-    async getHatenaBlogItems() {
-      const items = await API.getHatenaBlogItems()
-      if (items.json && !items.error) {
-        const result = [].concat(items.json.query.results.item)
-        dispatch(getHatenaBlogItems.done({ result }))
-      }
+class ActionDispather {
+  constructor(private dispatch: Dispatch) {}
+
+  public incrementCount = () => {
+    this.dispatch(incrementCount())
+  }
+
+  public getQiitaItems = async () => {
+    this.dispatch(getQiitaItems.started())
+    const items = await API.getQiitaItems()
+    if (items.json && !items.error) {
+      this.dispatch(getQiitaItems.done({ result: items.json }))
+    } else {
+      this.dispatch(getQiitaItems.failed({ error: items.error }))
     }
+  }
+
+  public getNoteItems = async () => {
+    this.dispatch(getNoteItems.started())
+    const items = await API.getNoteItems()
+    if (items.json && !items.error) {
+      const result = [].concat(items.json.query.results.item)
+      this.dispatch(getNoteItems.done({ result }))
+    } else {
+      this.dispatch(getNoteItems.failed({ error: items.error }))
+    }
+  }
+
+  public getHatenaBlogItems = async () => {
+    const items = await API.getHatenaBlogItems()
+    if (items.json && !items.error) {
+      const result = [].concat(items.json.query.results.item)
+      this.dispatch(getHatenaBlogItems.done({ result }))
+    }
+  }
+
+  public getGitHubItems = async () => {
+    const result = await client.query<any>({
+      query
+    })
+    this.dispatch(
+      getGitHubItems.done({ result: result.data.user.repositories.edges })
+    )
   }
 }
 
-type APIRequestFunc = () => Promise<any>
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return { actions: new ActionDispather(dispatch) }
+}
 
 type Props = AppState & {
-  incrementCount: () => void
-  getQiitaItems: APIRequestFunc
-  getNoteItems: APIRequestFunc
-  getGitHubItems: APIRequestFunc
-  getHatenaBlogItems: APIRequestFunc
+  actions: ActionDispather
 }
 
 const about: React.SFC<Props> = ({
   count,
-  incrementCount,
-  getQiitaItems,
   qiitaItems,
-  getNoteItems,
   noteItems,
-  getGitHubItems,
   gitHubItems,
-  getHatenaBlogItems,
-  hatenaBlogItems
+  hatenaBlogItems,
+  actions
 }) => (
   <App>
     <p>About Page</p>
-    <button onClick={incrementCount}>おしてね</button>
+    <button onClick={actions.incrementCount}>おしてね</button>
     <p>{count}</p>
-    <button onClick={getQiitaItems}>おせよ</button>
+    <button onClick={actions.getQiitaItems}>おせよ</button>
     <ul>
       {qiitaItems.map(item => {
         return (
@@ -132,7 +132,7 @@ const about: React.SFC<Props> = ({
         )
       })}
     </ul>
-    <button onClick={getNoteItems}>おしていただきたい</button>
+    <button onClick={actions.getNoteItems}>おしていただきたい</button>
     <ul>
       {noteItems.map(item => {
         return (
@@ -144,7 +144,7 @@ const about: React.SFC<Props> = ({
         )
       })}
     </ul>
-    <button onClick={getGitHubItems}>おすなよ</button>
+    <button onClick={actions.getGitHubItems}>おすなよ</button>
     <ul>
       {gitHubItems.map(item => {
         return (
@@ -156,7 +156,7 @@ const about: React.SFC<Props> = ({
         )
       })}
     </ul>
-    <button onClick={getHatenaBlogItems}>おしてもいいよ</button>
+    <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
     <ul>
       {hatenaBlogItems.map(item => {
         return (
