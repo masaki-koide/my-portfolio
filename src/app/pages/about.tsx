@@ -1,10 +1,9 @@
 import ApolloClient from 'apollo-boost'
 import gql from 'graphql-tag'
-import * as React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import * as API from '../api'
-import App from '../components/App'
+import About from '../components/pages/about'
 import {
   AppState,
   getGitHubItems,
@@ -104,71 +103,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return { actions: new ActionDispather(dispatch) }
 }
 
-type Props = AppState & {
+export type Props = AppState & {
   actions: ActionDispather
 }
 
-const about: React.SFC<Props> = ({
-  count,
-  qiitaItems,
-  noteItems,
-  gitHubItems,
-  hatenaBlogItems,
-  actions
-}) => (
-  <App>
-    <p>About Page</p>
-    <button onClick={actions.incrementCount}>おしてね</button>
-    <p>{count}</p>
-    <button onClick={actions.getQiitaItems}>おせよ</button>
-    <ul>
-      {qiitaItems.map(item => {
-        return (
-          <li key={item.id}>
-            <a href={item.url} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
-    <button onClick={actions.getNoteItems}>おしていただきたい</button>
-    <ul>
-      {noteItems.map(item => {
-        return (
-          <li key={item.guid}>
-            <a href={item.link} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
-    <button onClick={actions.getGitHubItems}>おすなよ</button>
-    <ul>
-      {gitHubItems.map(item => {
-        return (
-          <li key={item.node.url}>
-            <a href={item.node.url} target="_blank">
-              {item.node.name}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
-    <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
-    <ul>
-      {hatenaBlogItems.map(item => {
-        return (
-          <li key={item.guid.content}>
-            <a href={item.link} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
-  </App>
-)
-
-export default connect(mapStateToProps, mapDispatchToProps)(about)
+export default connect(mapStateToProps, mapDispatchToProps)(About)
