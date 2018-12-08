@@ -2,6 +2,7 @@ import * as React from 'react'
 // FIXME:pagesとcomponentsが相互参照してるの気持ち悪い
 import { Props } from '../../pages/about'
 import App from '../App'
+import LinkList from '../organisms/LinkList'
 
 const about: React.SFC<Props> = ({
   count,
@@ -28,17 +29,12 @@ const about: React.SFC<Props> = ({
       })}
     </ul>
     <button onClick={actions.getNoteItems}>おしていただきたい</button>
-    <ul>
-      {noteItems.map(item => {
-        return (
-          <li key={item.guid}>
-            <a href={item.link} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
+    <LinkList
+      links={noteItems.map<{ href: string; text: string }>(item => ({
+        href: item.link,
+        text: item.title
+      }))}
+    />
     <button onClick={actions.getGitHubItems}>おすなよ</button>
     <ul>
       {gitHubItems.map(item => {
