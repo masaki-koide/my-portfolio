@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@emotion/core": "^10.0.4",
+    "@emotion/styled": "^10.0.4",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-boost": "^0.1.17",
     "dotenv": "^6.1.0",
