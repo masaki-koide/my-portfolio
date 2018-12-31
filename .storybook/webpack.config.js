@@ -5,7 +5,10 @@ module.exports = (baseConfig, env, config) => {
     test: /\.tsx?$/,
     use: [
       {
-        loader: require.resolve("babel-loader")
+        loader: require.resolve("babel-loader"),
+        options: {
+          presets: ["@emotion/babel-preset-css-prop"]
+        }
       },
       {
         loader: require.resolve("awesome-typescript-loader")
