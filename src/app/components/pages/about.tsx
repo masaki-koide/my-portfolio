@@ -9,7 +9,6 @@ const about: React.SFC<Props> = ({
   count,
   qiitaItems,
   noteItems,
-  // gitHubItems,
   hatenaItems,
   actions
 }) => (
@@ -36,18 +35,6 @@ const about: React.SFC<Props> = ({
         text: item.title
       }))}
     />
-    {/* <button onClick={actions.getGitHubItems}>おすなよ</button>
-    <ul>
-      {gitHubItems.map(item => {
-        return (
-          <li key={item.node.url}>
-            <a href={item.node.url} target="_blank">
-              {item.node.name}
-            </a>
-          </li>
-        )
-      })}
-    </ul> */}
     <GitHubItems />
     <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
     <ul>
