@@ -7,24 +7,24 @@ import About from '../components/pages/about'
 import {
   AppState,
   getGitHubItems,
-  getHatenaBlogItems,
+  getHatenaItems,
   getNoteItems,
   getQiitaItems,
   incrementCount
-} from '../store'
+} from '../modules/app'
 
 const mapStateToProps = ({
   count,
   qiitaItems,
   noteItems,
   gitHubItems,
-  hatenaBlogItems
+  hatenaItems
 }: AppState) => ({
   count,
   qiitaItems,
   noteItems,
   gitHubItems,
-  hatenaBlogItems
+  hatenaItems
 })
 
 const client = new ApolloClient({
@@ -85,7 +85,7 @@ class ActionDispather {
     const items = await API.getHatenaBlogItems()
     if (items.json && !items.error) {
       const result = [].concat(items.json.query.results.item)
-      this.dispatch(getHatenaBlogItems.done({ result }))
+      this.dispatch(getHatenaItems.done({ result }))
     }
   }
 

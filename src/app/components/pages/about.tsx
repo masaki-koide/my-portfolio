@@ -9,7 +9,7 @@ const about: React.SFC<Props> = ({
   qiitaItems,
   noteItems,
   gitHubItems,
-  hatenaBlogItems,
+  hatenaItems,
   actions
 }) => (
   <App>
@@ -49,7 +49,7 @@ const about: React.SFC<Props> = ({
     </ul>
     <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
     <ul>
-      {hatenaBlogItems.map(item => {
+      {hatenaItems.map(item => {
         return (
           <li key={item.guid.content}>
             <a href={item.link} target="_blank">
