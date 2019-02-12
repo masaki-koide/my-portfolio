@@ -1,5 +1,6 @@
 import ApolloClient from 'apollo-boost'
 import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 
 export const client = new ApolloClient({
   uri: 'https://api.github.com/graphql',
@@ -26,3 +27,18 @@ export const query = gql`
     }
   }
 `
+
+export class GetGitHubItemsQuery extends Query<{
+  user: {
+    repositories: {
+      edges: [
+        {
+          node: {
+            name: string
+            url: string
+          }
+        }
+      ]
+    }
+  }
+}> {}
