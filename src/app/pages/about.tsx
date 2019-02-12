@@ -1,12 +1,9 @@
-import ApolloClient from 'apollo-boost'
-import gql from 'graphql-tag'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import * as API from '../api'
 import About from '../components/pages/about'
 import {
   AppState,
-  getGitHubItems,
   getHatenaItems,
   getNoteItems,
   getQiitaItems,
@@ -17,41 +14,13 @@ const mapStateToProps = ({
   count,
   qiitaItems,
   noteItems,
-  gitHubItems,
   hatenaItems
 }: AppState) => ({
   count,
   qiitaItems,
   noteItems,
-  gitHubItems,
   hatenaItems
 })
-
-const client = new ApolloClient({
-  uri: 'https://api.github.com/graphql',
-  request: async operation => {
-    operation.setContext({
-      headers: {
-        authorization: `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`
-      }
-    })
-  }
-})
-
-const query = gql`
-  query {
-    user(login: "masaki-koide") {
-      repositories(first: 5, orderBy: { field: CREATED_AT, direction: DESC }) {
-        edges {
-          node {
-            name
-            url
-          }
-        }
-      }
-    }
-  }
-`
 
 class ActionDispather {
   constructor(private dispatch: Dispatch) {}
@@ -87,15 +56,6 @@ class ActionDispather {
       const result = [].concat(items.json.query.results.item)
       this.dispatch(getHatenaItems.done({ result }))
     }
-  }
-
-  public getGitHubItems = async () => {
-    const result = await client.query<any>({
-      query
-    })
-    this.dispatch(
-      getGitHubItems.done({ result: result.data.user.repositories.edges })
-    )
   }
 }
 

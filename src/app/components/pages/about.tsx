@@ -2,13 +2,14 @@ import * as React from 'react'
 // FIXME:pagesとcomponentsが相互参照してるの気持ち悪い
 import { Props } from '../../pages/about'
 import App from '../App'
+import GitHubItems from '../moleculas/GitHubItems'
 import LinkList from '../organisms/LinkList'
 
 const about: React.SFC<Props> = ({
   count,
   qiitaItems,
   noteItems,
-  gitHubItems,
+  // gitHubItems,
   hatenaItems,
   actions
 }) => (
@@ -35,7 +36,7 @@ const about: React.SFC<Props> = ({
         text: item.title
       }))}
     />
-    <button onClick={actions.getGitHubItems}>おすなよ</button>
+    {/* <button onClick={actions.getGitHubItems}>おすなよ</button>
     <ul>
       {gitHubItems.map(item => {
         return (
@@ -46,7 +47,8 @@ const about: React.SFC<Props> = ({
           </li>
         )
       })}
-    </ul>
+    </ul> */}
+    <GitHubItems />
     <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
     <ul>
       {hatenaItems.map(item => {

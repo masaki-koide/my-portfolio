@@ -5,7 +5,6 @@ export interface AppState {
   count: number
   qiitaItems: any[]
   noteItems: any[]
-  gitHubItems: any[]
   hatenaItems: any[]
 }
 
@@ -13,7 +12,6 @@ const initialState: AppState = {
   count: 0,
   qiitaItems: [],
   noteItems: [],
-  gitHubItems: [],
   hatenaItems: []
 }
 
@@ -24,9 +22,6 @@ export const getQiitaItems = actionCreator.async<void, any[], Error>(
 )
 export const getNoteItems = actionCreator.async<void, any[], Error>(
   'GET_NOTE_ITEMS'
-)
-export const getGitHubItems = actionCreator.async<void, any[], Error>(
-  'GET_GITHUB_ITEMS'
 )
 export const getHatenaItems = actionCreator.async<void, any[], Error>(
   'GET_HATENA_ITEMS'
@@ -61,12 +56,6 @@ export default reducerWithInitialState<AppState>(initialState)
     return {
       ...state,
       noteItems: result
-    }
-  })
-  .case(getGitHubItems.done, (state, { result }) => {
-    return {
-      ...state,
-      gitHubItems: result
     }
   })
   .case(getHatenaItems.done, (state, { result }) => {
