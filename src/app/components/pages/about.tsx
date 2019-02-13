@@ -40,7 +40,7 @@ const about: React.SFC<Props> = ({
     <ul>
       {hatenaItems.map(item => {
         return (
-          <li key={item.guid.content}>
+          <li key={item.guid}>
             <a href={item.link} target="_blank">
               {item.title}
             </a>

@@ -1,4 +1,4 @@
-import querystring from 'querystring'
+import Parser, { Items } from 'rss-parser'
 
 export interface APIResponse {
   json?: any
@@ -19,10 +19,6 @@ const wrapFetch = (
     })
 }
 
-const fetchRSS = (query: string): Promise<APIResponse> => {
-  return wrapFetch(`https://query.yahooapis.com/v1/public/yql?${query}`)
-}
-
 export function getQiitaItems(): Promise<APIResponse> {
   return wrapFetch(
     'https://qiita.com/api/v2/authenticated_user/items?per_page=5',
@@ -34,19 +30,24 @@ export function getQiitaItems(): Promise<APIResponse> {
   )
 }
 
-export function getNoteItems(): Promise<APIResponse> {
-  const qs = querystring.stringify({
-    q: 'select * from feed where url = "https://note.mu/mar_key/rss" limit 5',
-    format: 'json'
-  })
-  return fetchRSS(qs)
+const parser = new Parser()
+function getFeedItems(feedUrl: string): Promise<Items[]> {
+  const corsProxy = 'https://cors-anywhere.herokuapp.com/'
+  return parser
+    .parseURL(corsProxy + feedUrl)
+    .then<Items[]>(
+      feeds => feeds.items || Promise.reject(new Error('Not found feed'))
+    )
+    .then(items => items)
+    .catch(err => {
+      return err
+    })
 }
 
-export function getHatenaBlogItems(): Promise<APIResponse> {
-  const qs = querystring.stringify({
-    q:
-      'select * from feed where url = "https://receiptnoura.hatenablog.jp/rss" limit 5',
-    format: 'json'
-  })
-  return fetchRSS(qs)
+export function getNoteItems(): Promise<Items[]> {
+  return getFeedItems('https://note.mu/mar_key/rss')
+}
+
+export function getHatenaBlogItems(): Promise<Items[]> {
+  return getFeedItems('https://receiptnoura.hatenablog.jp/rss')
 }

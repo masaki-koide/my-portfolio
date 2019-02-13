@@ -39,23 +39,21 @@ class ActionDispather {
     }
   }
 
-  public getNoteItems = async () => {
+  public getNoteItems = () => {
     this.dispatch(getNoteItems.started())
-    const items = await API.getNoteItems()
-    if (items.json && !items.error) {
-      const result = [].concat(items.json.query.results.item)
-      this.dispatch(getNoteItems.done({ result }))
-    } else {
-      this.dispatch(getNoteItems.failed({ error: items.error }))
-    }
+    API.getNoteItems()
+      .then(items => {
+        this.dispatch(getNoteItems.done({ result: items }))
+      })
+      .catch(error => {
+        this.dispatch(getNoteItems.failed({ error }))
+      })
   }
 
-  public getHatenaBlogItems = async () => {
-    const items = await API.getHatenaBlogItems()
-    if (items.json && !items.error) {
-      const result = [].concat(items.json.query.results.item)
-      this.dispatch(getHatenaItems.done({ result }))
-    }
+  public getHatenaBlogItems = () => {
+    API.getHatenaBlogItems().then(items => {
+      this.dispatch(getHatenaItems.done({ result: items }))
+    })
   }
 }
 
