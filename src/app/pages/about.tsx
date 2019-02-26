@@ -1,14 +1,14 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import * as API from '../api/articles'
-import About from '../components/pages/about'
+import * as API from '~/api/articles'
+import About from '~/components/pages/about'
 import {
   AppState,
   getHatenaItems,
   getNoteItems,
   getQiitaItems,
   incrementCount
-} from '../modules/app'
+} from '~/modules/app'
 
 const mapStateToProps = ({
   count,

@@ -1,9 +1,9 @@
 import * as React from 'react'
+import App from '~/components/App'
+import GitHubItems from '~/components/moleculas/GitHubItems'
+import LinkList from '~/components/organisms/LinkList'
 // FIXME:pagesとcomponentsが相互参照してるの気持ち悪い
-import { Props } from '../../pages/about'
-import App from '../App'
-import GitHubItems from '../moleculas/GitHubItems'
-import LinkList from '../organisms/LinkList'
+import { Props } from '~/pages/about'
 
 const about: React.SFC<Props> = ({
   count,

@@ -3,7 +3,7 @@ import App, { Container, NextAppContext } from 'next/app'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
-import { initStore } from '../store'
+import { initStore } from '~/store'
 
 interface Props extends NextAppContext {
   store: Store

@@ -1,5 +1,5 @@
 import { ApolloProvider } from 'react-apollo'
-import { client, GetGitHubItemsQuery, query } from '../../api/apollo'
+import { client, GetGitHubItemsQuery, query } from '~/api/apollo'
 
 export default () => (
   <ApolloProvider client={client}>
