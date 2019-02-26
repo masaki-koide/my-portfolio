@@ -1,27 +1,17 @@
 import Parser, { Items } from 'rss-parser'
+import fetcher from './fetcher'
 
-export interface APIResponse {
-  json?: any
-  error?: any
-}
+export type QiitaItems = Array<{
+  id: string
+  title: string
+  url: string
+  [key: string]: any
+}>
 
-const wrapFetch = (
-  input: RequestInfo,
-  init?: RequestInit | undefined
-): Promise<APIResponse> => {
-  return fetch(input, init)
-    .then(response => response.json())
-    .then(json => {
-      return { json }
-    })
-    .catch(error => {
-      return { error }
-    })
-}
-
-export function getQiitaItems(): Promise<APIResponse> {
-  return wrapFetch(
-    'https://qiita.com/api/v2/authenticated_user/items?per_page=5',
+export function getQiitaItems(limit?: number) {
+  const perPage = limit || 5
+  return fetcher<QiitaItems>(
+    `https://qiita.com/api/v2/authenticated_user/items?per_page=${perPage}`,
     {
       headers: {
         Authorization: `Bearer ${process.env.QIITA_ACCESS_TOKEN}`
@@ -38,10 +28,7 @@ function getFeedItems(feedUrl: string): Promise<Items[]> {
     .then<Items[]>(
       feeds => feeds.items || Promise.reject(new Error('Not found feed'))
     )
-    .then(items => items)
-    .catch(err => {
-      return err
-    })
+    .catch(err => err)
 }
 
 export function getNoteItems(): Promise<Items[]> {

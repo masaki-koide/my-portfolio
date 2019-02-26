@@ -31,8 +31,8 @@ const about: React.SFC<Props> = ({
     <button onClick={actions.getNoteItems}>おしていただきたい</button>
     <LinkList
       links={noteItems.map<{ href: string; text: string }>(item => ({
-        href: item.link,
-        text: item.title
+        href: item.link || '',
+        text: item.title || ''
       }))}
     />
     <GitHubItems />

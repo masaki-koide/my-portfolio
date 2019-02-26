@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import * as API from '../api'
+import * as API from '../api/articles'
 import About from '../components/pages/about'
 import {
   AppState,
@@ -29,14 +29,15 @@ class ActionDispather {
     this.dispatch(incrementCount())
   }
 
-  public getQiitaItems = async () => {
+  public getQiitaItems = () => {
     this.dispatch(getQiitaItems.started())
-    const items = await API.getQiitaItems()
-    if (items.json && !items.error) {
-      this.dispatch(getQiitaItems.done({ result: items.json }))
-    } else {
-      this.dispatch(getQiitaItems.failed({ error: items.error }))
-    }
+    API.getQiitaItems()
+      .then(result => {
+        this.dispatch(getQiitaItems.done({ result }))
+      })
+      .catch(error => {
+        this.dispatch(getQiitaItems.failed({ error }))
+      })
   }
 
   public getNoteItems = () => {
