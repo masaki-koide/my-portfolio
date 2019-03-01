@@ -68,8 +68,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   return { actions: new ActionDispather(dispatch) }
 }
 
-export type Props = AppState & {
-  actions: ActionDispather
-}
+export type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>
 
 export default connect(mapStateToProps, mapDispatchToProps)(About)
