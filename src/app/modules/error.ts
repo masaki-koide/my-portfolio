@@ -25,7 +25,9 @@ const errorReducer: Reducer<ErrorState> = (
   return {
     ...state,
     [requestName]:
-      requestState === 'FAILED' && payload && payload.error ? payload.error : undefined
+      requestState === 'FAILED' && payload && payload.error
+        ? payload.error
+        : undefined
   }
 }
 

@@ -5,10 +5,6 @@ import reducer, { AppState } from '~/modules'
 
 export const initStore = (state: AppState, { debug }: withRedux.Options) => {
   return debug
-    ? createStore(
-        reducer,
-        state,
-        composeWithDevTools()
-      )
+    ? createStore(reducer, state, composeWithDevTools())
     : createStore(reducer, state)
 }
