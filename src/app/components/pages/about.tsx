@@ -2,7 +2,6 @@ import * as React from 'react'
 import App from '~/components/App'
 import GitHubItems from '~/components/moleculas/GitHubItems'
 import LinkList from '~/components/organisms/LinkList'
-// FIXME:pagesとcomponentsが相互参照してるの気持ち悪い
 import { Props } from '~/pages/about'
 
 const about: React.SFC<Props> = ({
@@ -10,10 +9,12 @@ const about: React.SFC<Props> = ({
   qiitaItems,
   noteItems,
   hatenaItems,
-  actions
+  actions,
+  loading
 }) => (
   <App>
     <p>About Page</p>
+    {loading && <p>loading...</p>}
     <button onClick={actions.incrementCount}>おしてね</button>
     <p>{count}</p>
     <button onClick={actions.getQiitaItems}>おせよ</button>
