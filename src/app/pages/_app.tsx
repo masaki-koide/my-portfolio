@@ -1,5 +1,6 @@
 import withRedux from 'next-redux-wrapper'
 import App, { Container, NextAppContext } from 'next/app'
+import Head from 'next/head'
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Store } from 'redux'
@@ -24,11 +25,20 @@ export default withRedux(initStore, {
     public render() {
       const { Component, pageProps, store } = this.props
       return (
-        <Container>
-          <Provider store={store}>
-            <Component {...pageProps} />
-          </Provider>
-        </Container>
+        <div>
+          <Head>
+            <title>my-portfolio</title>
+            <meta
+              name="viewport"
+              content="width=device-width,initial-scale=1"
+            />
+          </Head>
+          <Container>
+            <Provider store={store}>
+              <Component {...pageProps} />
+            </Provider>
+          </Container>
+        </div>
       )
     }
   }
