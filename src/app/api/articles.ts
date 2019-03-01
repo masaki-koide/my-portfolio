@@ -2,13 +2,13 @@ import Parser, { Items } from 'rss-parser'
 import fetcher from './fetcher'
 
 export type QiitaItems = Array<{
+  [key: string]: any
   id: string
   title: string
   url: string
-  [key: string]: any
 }>
 
-export function getQiitaItems(limit?: number) {
+export function getQiitaItems(limit?: number): Promise<QiitaItems> {
   const perPage = limit || 5
   return fetcher<QiitaItems>(
     `https://qiita.com/api/v2/authenticated_user/items?per_page=${perPage}`,
@@ -28,7 +28,7 @@ function getFeedItems(feedUrl: string): Promise<Items[]> {
     .then<Items[]>(
       feeds => feeds.items || Promise.reject(new Error('Not found feed'))
     )
-    .catch(err => err)
+    .catch(err => Promise.reject(err))
 }
 
 export function getNoteItems(): Promise<Items[]> {
