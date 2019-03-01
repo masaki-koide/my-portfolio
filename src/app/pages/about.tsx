@@ -10,17 +10,20 @@ import {
   getQiitaItems,
   incrementCount
 } from '~/modules/articles'
+import { errorSelector } from '~/modules/error'
 import { loadingSelector } from '~/modules/loading'
 
 const mapStateToProps = ({
   article: { count, qiitaItems, noteItems, hatenaItems },
-  loading
+  loading,
+  error
 }: AppState) => ({
   count,
   qiitaItems,
   noteItems,
   hatenaItems,
-  loading: loadingSelector(loading, actionTypes)
+  loading: loadingSelector(loading, actionTypes),
+  error: errorSelector(error, actionTypes)
 })
 
 class ActionDispather {

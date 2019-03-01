@@ -10,11 +10,13 @@ const about: React.SFC<Props> = ({
   noteItems,
   hatenaItems,
   actions,
-  loading
+  loading,
+  error
 }) => (
   <App>
     <p>About Page</p>
     {loading && <p>loading...</p>}
+    {error && <p>{error.message}</p>}
     <button onClick={actions.incrementCount}>おしてね</button>
     <p>{count}</p>
     <button onClick={actions.getQiitaItems}>おせよ</button>
