@@ -29,7 +29,7 @@ export const getHatenaItems = actionCreator.async<void, Items[], Error>(
   'GET_HATENA_ITEMS'
 )
 
-export const actionTypes = [
+export const asyncActionTypes = [
   getQiitaItems.type,
   getNoteItems.type,
   getHatenaItems.type

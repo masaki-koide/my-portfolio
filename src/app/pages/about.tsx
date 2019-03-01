@@ -4,7 +4,7 @@ import * as API from '~/api/articles'
 import About from '~/components/pages/about'
 import { AppState } from '~/modules'
 import {
-  actionTypes,
+  asyncActionTypes,
   getHatenaItems,
   getNoteItems,
   getQiitaItems,
@@ -22,8 +22,8 @@ const mapStateToProps = ({
   qiitaItems,
   noteItems,
   hatenaItems,
-  loading: loadingSelector(loading, actionTypes),
-  error: errorSelector(error, actionTypes)
+  loading: loadingSelector(loading, asyncActionTypes),
+  error: errorSelector(error, asyncActionTypes)
 })
 
 class ActionDispather {
@@ -47,8 +47,8 @@ class ActionDispather {
   public getNoteItems = () => {
     this.dispatch(getNoteItems.started())
     API.getNoteItems()
-      .then(items => {
-        this.dispatch(getNoteItems.done({ result: items }))
+      .then(result => {
+        this.dispatch(getNoteItems.done({ result }))
       })
       .catch(error => {
         this.dispatch(getNoteItems.failed({ error }))
@@ -58,8 +58,8 @@ class ActionDispather {
   public getHatenaBlogItems = () => {
     this.dispatch(getHatenaItems.started())
     API.getHatenaBlogItems()
-      .then(items => {
-        this.dispatch(getHatenaItems.done({ result: items }))
+      .then(result => {
+        this.dispatch(getHatenaItems.done({ result }))
       })
       .catch(error => {
         this.dispatch(getHatenaItems.failed({ error }))
