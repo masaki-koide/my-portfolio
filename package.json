@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-rc.1",
+    "@storybook/addon-viewport": "^4.1.13",
     "@storybook/react": "^4.0.12",
     "@types/next": "^7.0.2",
     "@types/next-redux-wrapper": "^2.0.0",
