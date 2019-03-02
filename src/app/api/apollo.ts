@@ -19,8 +19,19 @@ export const query = gql`
       repositories(first: 5, orderBy: { field: CREATED_AT, direction: DESC }) {
         edges {
           node {
-            name
+            id
             url
+            name
+            description
+            createdAt
+            languages(first: 5) {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
           }
         }
       }
@@ -34,8 +45,21 @@ export class GetGitHubItemsQuery extends Query<{
       edges: [
         {
           node: {
-            name: string
+            id: string
             url: string
+            name: string
+            description: string
+            createdAt: string
+            languages: {
+              edges: [
+                {
+                  node: {
+                    id: string
+                    name: string
+                  }
+                }
+              ]
+            }
           }
         }
       ]

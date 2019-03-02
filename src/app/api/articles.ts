@@ -4,8 +4,12 @@ import fetcher from './fetcher'
 export type QiitaItems = Array<{
   [key: string]: any
   id: string
-  title: string
   url: string
+  title: string
+  body: string
+  tags?: Array<{
+    name: string
+  }>
 }>
 
 export function getQiitaItems(limit?: number): Promise<QiitaItems> {
