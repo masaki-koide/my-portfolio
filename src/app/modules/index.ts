@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import article, { ArticlesState } from './articles'
+import articles, { ArticlesState } from './articles'
 import error, { ErrorState } from './error'
 import loading, { LoadingState } from './loading'
 
 export type AppState = {
-  article: ArticlesState
+  articles: ArticlesState
   loading: LoadingState
   error: ErrorState
 }
 
-export default combineReducers<AppState>({ article, loading, error })
+export default combineReducers<AppState>({ articles, loading, error })

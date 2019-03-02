@@ -14,7 +14,7 @@ import { errorSelector } from '~/modules/error'
 import { loadingSelector } from '~/modules/loading'
 
 const mapStateToProps = ({
-  article: { count, qiitaItems, noteItems, hatenaItems },
+  articles: { count, qiitaItems, noteItems, hatenaItems },
   loading,
   error
 }: AppState) => ({
