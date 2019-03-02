@@ -1,7 +1,6 @@
 import * as React from 'react'
 import App from '~/components/App'
 import GitHubItems from '~/components/moleculas/GitHubItems'
-import LinkList from '~/components/organisms/LinkList'
 import { Props } from '~/pages/about'
 
 const about: React.SFC<Props> = ({
@@ -32,12 +31,17 @@ const about: React.SFC<Props> = ({
       })}
     </ul>
     <button onClick={actions.getNoteItems}>おしていただきたい</button>
-    <LinkList
-      links={noteItems.map<{ href: string; text: string }>(item => ({
-        href: item.link || '',
-        text: item.title || ''
-      }))}
-    />
+    <ul>
+      {noteItems.map(item => {
+        return (
+          <li key={item.guid}>
+            <a href={item.link} target="_blank">
+              {item.title}
+            </a>
+          </li>
+        )
+      })}
+    </ul>
     <GitHubItems />
     <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
     <ul>
