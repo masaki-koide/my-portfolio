@@ -10,9 +10,7 @@ interface Props extends NextAppContext {
   store: Store
 }
 
-export default withRedux(initStore, {
-  debug: process.env.NODE_ENV !== 'production'
-})(
+export default withRedux(initStore)(
   class MyApp extends App<Props> {
     public static async getInitialProps({ Component, ctx }: Props) {
       return {

@@ -18,6 +18,7 @@
     "target": "esnext",
     "paths": {
       "~/*": ["src/app/*"]
-    }
+    },
+    "typeRoots": ["./types"]
   }
 }
