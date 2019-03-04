@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-rc.1",
+    "@storybook/addon-knobs": "^4.1.13",
     "@storybook/addon-viewport": "^4.1.13",
     "@storybook/react": "^4.0.12",
     "@types/next": "^7.0.2",
@@ -49,6 +50,7 @@
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
     "@types/react-redux": "^6.0.9",
+    "@types/storybook__addon-knobs": "^4.0.1",
     "@types/storybook__react": "^4.0.0",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
