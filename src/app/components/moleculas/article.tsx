@@ -18,7 +18,7 @@ const chipStyle = css`
 export type Props = {
   title: string
   description: string
-  tags: Array<{
+  tags?: Array<{
     id: string
     name: string
   }>

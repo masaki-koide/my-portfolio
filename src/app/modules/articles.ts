@@ -38,15 +38,13 @@ export const asyncActionTypes = [
 
 const descriptionLength = 100
 const feedsToArticles = (feeds: Items[]): Article[] => {
-  return feeds.map(feed => {
-    return {
-      title: feed.title || '',
-      description: feed.contentSnippet
-        ? feed.contentSnippet.slice(0, descriptionLength)
-        : '',
-      tags: []
-    }
-  })
+  return feeds.map(feed => ({
+    title: feed.title || '',
+    description: feed.contentSnippet
+      ? feed.contentSnippet.slice(0, descriptionLength)
+      : '',
+    tags: undefined
+  }))
 }
 
 export default reducerWithInitialState<ArticlesState>(initialState)
@@ -57,15 +55,11 @@ export default reducerWithInitialState<ArticlesState>(initialState)
     }
   })
   .case(getQiitaItems.done, (state, { result }) => {
-    const qiitaItems = result.map(item => {
-      return {
-        title: item.title,
-        description: item.body.slice(0, descriptionLength),
-        tags: item.tags
-          ? item.tags.map((tag, i) => ({ id: String(i), ...tag }))
-          : []
-      }
-    })
+    const qiitaItems = result.map(item => ({
+      title: item.title,
+      description: item.body.slice(0, descriptionLength),
+      tags: item.tags && item.tags.map((tag, i) => ({ id: String(i), ...tag }))
+    }))
     return {
       ...state,
       qiitaItems
