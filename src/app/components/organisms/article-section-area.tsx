@@ -18,9 +18,13 @@ const ArticleSectionArea: FC<Props> = props => {
   return (
     <SectionArea color={props.color} css={style}>
       {props.data.length && (
-        <Grid container spacing={32}>
+        <Grid
+          container
+          spacing={32}
+          justify={props.data.length > 1 ? 'flex-start' : 'center'}
+        >
           {props.data.map(article => (
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6} key={article.title}>
               <Article
                 title={article.title}
                 description={article.description}
