@@ -12,8 +12,12 @@ type Props = {
   color: string
 }
 
-const sectionArea: FC<Props> = ({ children, color }) => {
-  return <SectionArea color={color}>{children}</SectionArea>
+const sectionArea: FC<Props> = ({ children, color, ...props }) => {
+  return (
+    <SectionArea color={color} {...props}>
+      {children}
+    </SectionArea>
+  )
 }
 
 export default sectionArea
