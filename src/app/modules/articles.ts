@@ -2,12 +2,13 @@ import { Items } from 'rss-parser'
 import { actionCreatorFactory } from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { QiitaItems } from '~/api/articles'
+import { Props as Article } from '~/components/moleculas/article'
 
 export type ArticlesState = {
   count: number
-  qiitaItems: QiitaItems
-  noteItems: Items[]
-  hatenaItems: Items[]
+  qiitaItems: Article[]
+  noteItems: Article[]
+  hatenaItems: Article[]
 }
 
 const initialState: ArticlesState = {
@@ -35,6 +36,19 @@ export const asyncActionTypes = [
   getHatenaItems.type
 ]
 
+const descriptionLength = 100
+const feedsToArticles = (feeds: Items[]): Article[] => {
+  return feeds.map(feed => {
+    return {
+      title: feed.title || '',
+      description: feed.contentSnippet
+        ? feed.contentSnippet.slice(0, descriptionLength)
+        : '',
+      tags: []
+    }
+  })
+}
+
 export default reducerWithInitialState<ArticlesState>(initialState)
   .case(incrementCount, state => {
     return {
@@ -43,20 +57,31 @@ export default reducerWithInitialState<ArticlesState>(initialState)
     }
   })
   .case(getQiitaItems.done, (state, { result }) => {
+    const qiitaItems = result.map(item => {
+      return {
+        title: item.title,
+        description: item.body.slice(0, descriptionLength),
+        tags: item.tags
+          ? item.tags.map((tag, i) => ({ id: String(i), ...tag }))
+          : []
+      }
+    })
     return {
       ...state,
-      qiitaItems: result
+      qiitaItems
     }
   })
   .case(getNoteItems.done, (state, { result }) => {
+    const noteItems = feedsToArticles(result)
     return {
       ...state,
-      noteItems: result
+      noteItems
     }
   })
   .case(getHatenaItems.done, (state, { result }) => {
+    const hatenaItems = feedsToArticles(result)
     return {
       ...state,
-      hatenaItems: result
+      hatenaItems
     }
   })

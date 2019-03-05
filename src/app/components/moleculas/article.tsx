@@ -15,7 +15,7 @@ const chipStyle = css`
   margin-right: 5px;
 `
 
-type Props = {
+export type Props = {
   title: string
   description: string
   tags: Array<{

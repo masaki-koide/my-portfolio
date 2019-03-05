@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
 import { Grid } from '@material-ui/core'
 import { FC } from 'react'
-import Article from '../moleculas/article'
+import Article, { Props as ArticleProps } from '../moleculas/article'
 import SectionArea from './section-area'
 
 const style = css`
@@ -9,7 +9,7 @@ const style = css`
 `
 
 type Props = PropsTypeFromFC<typeof SectionArea> & {
-  data: Array<PropsTypeFromFC<typeof Article>>
+  data: ArticleProps[]
   children?: never
 }
 

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import App from '~/components/App'
 import GitHubItems from '~/components/moleculas/GitHubItems'
+import ArticleSectionArea from '~/components/organisms/article-section-area'
 import { Props } from '~/pages/about'
 
 const about: React.SFC<Props> = ({
@@ -19,42 +20,12 @@ const about: React.SFC<Props> = ({
     <button onClick={actions.incrementCount}>おしてね</button>
     <p>{count}</p>
     <button onClick={actions.getQiitaItems}>おせよ</button>
-    <ul>
-      {qiitaItems.map(item => {
-        return (
-          <li key={item.id}>
-            <a href={item.url} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
+    <ArticleSectionArea color="gray" data={qiitaItems} />
     <button onClick={actions.getNoteItems}>おしていただきたい</button>
-    <ul>
-      {noteItems.map(item => {
-        return (
-          <li key={item.guid}>
-            <a href={item.link} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
+    <ArticleSectionArea color="white" data={noteItems} />
     <GitHubItems />
     <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
-    <ul>
-      {hatenaItems.map(item => {
-        return (
-          <li key={item.guid}>
-            <a href={item.link} target="_blank">
-              {item.title}
-            </a>
-          </li>
-        )
-      })}
-    </ul>
+    <ArticleSectionArea color="gray" data={hatenaItems} />
   </App>
 )
 
