@@ -1,5 +1,6 @@
 import { ApolloProvider } from 'react-apollo'
 import { client, GetGitHubItemsQuery, query } from '~/api/apollo'
+import ArticleSectionArea from '../organisms/article-section-area'
 
 export default () => (
   <ApolloProvider client={client}>
@@ -12,17 +13,20 @@ export default () => (
           return <p>{error.message}</p>
         }
 
+        const mappedData =
+          data &&
+          data.user.repositories.edges.map(repository => ({
+            title: repository.node.name,
+            description: repository.node.description,
+            tags: repository.node.languages.edges.map(language => ({
+              id: language.node.id,
+              name: language.node.name
+            }))
+          }))
+
         return (
-          data && (
-            <ul>
-              {data.user.repositories.edges.map(item => (
-                <li key={item.node.url}>
-                  <a href={item.node.url} target="_blank">
-                    {item.node.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          mappedData && (
+            <ArticleSectionArea title="GitHub" color="gray" data={mappedData} />
           )
         )
       }}
