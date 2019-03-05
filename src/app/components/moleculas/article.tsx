@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Chip from '@material-ui/core/Chip'
 import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
+import { FC } from 'react'
 
 const chipDivStyle = css`
   margin-top: 10px;
@@ -23,7 +24,7 @@ type Props = {
   }>
 }
 
-const Article = (props: Props) => {
+const Article: FC<Props> = props => {
   return (
     <Card>
       <CardContent>
