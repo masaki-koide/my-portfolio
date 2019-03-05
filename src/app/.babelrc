@@ -1,4 +1,3 @@
 {
-  // TODO:@emotion/babel-preset-css-prop
-  "presets": ["next/babel", "@zeit/next-typescript/babel"]
+  "presets": ["next/babel", "@zeit/next-typescript/babel", "@emotion/babel-preset-css-prop"]
 }
