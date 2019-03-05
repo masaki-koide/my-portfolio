@@ -20,12 +20,12 @@ const about: React.SFC<Props> = ({
     <button onClick={actions.incrementCount}>おしてね</button>
     <p>{count}</p>
     <button onClick={actions.getQiitaItems}>おせよ</button>
-    <ArticleSectionArea color="gray" data={qiitaItems} />
+    <ArticleSectionArea title="Qiita" color="gray" data={qiitaItems} />
     <button onClick={actions.getNoteItems}>おしていただきたい</button>
-    <ArticleSectionArea color="white" data={noteItems} />
+    <ArticleSectionArea title="Blog" color="white" data={noteItems} />
     <GitHubItems />
     <button onClick={actions.getHatenaBlogItems}>おしてもいいよ</button>
-    <ArticleSectionArea color="gray" data={hatenaItems} />
+    <ArticleSectionArea title="Blog(old)" color="white" data={hatenaItems} />
   </App>
 )
 

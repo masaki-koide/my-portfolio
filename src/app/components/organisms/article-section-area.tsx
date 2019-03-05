@@ -1,14 +1,20 @@
 import { css } from '@emotion/core'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { FC } from 'react'
 import Article, { Props as ArticleProps } from '../moleculas/article'
 import SectionArea from './section-area'
 
-const style = css`
-  padding: 2rem;
+const sectionStyle = css`
+  padding: 4rem 2rem;
+`
+
+const titleStyle = css`
+  text-align: center;
+  margin-bottom: 4rem !important;
 `
 
 type Props = PropsTypeFromFC<typeof SectionArea> & {
+  title: string
   data: ArticleProps[]
   children?: never
 }
@@ -16,8 +22,11 @@ type Props = PropsTypeFromFC<typeof SectionArea> & {
 // TODO:データが1件もないときはどうする？
 const ArticleSectionArea: FC<Props> = props => {
   return (
-    <SectionArea color={props.color} css={style}>
-      {props.data.length && (
+    <SectionArea color={props.color} css={sectionStyle}>
+      <Typography variant="h2" css={titleStyle}>
+        {props.title}
+      </Typography>
+      {props.data.length ? (
         <Grid
           container
           spacing={32}
@@ -33,6 +42,8 @@ const ArticleSectionArea: FC<Props> = props => {
             </Grid>
           ))}
         </Grid>
+      ) : (
+        undefined
       )}
     </SectionArea>
   )

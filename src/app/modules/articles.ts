@@ -36,7 +36,7 @@ export const asyncActionTypes = [
   getHatenaItems.type
 ]
 
-const descriptionLength = 100
+const descriptionLength = 200
 const feedsToArticles = (feeds: Items[]): Article[] => {
   return feeds.map(feed => ({
     title: feed.title || '',

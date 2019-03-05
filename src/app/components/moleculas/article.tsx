@@ -8,11 +8,29 @@ import Divider from '@material-ui/core/Divider'
 import Typography from '@material-ui/core/Typography'
 import { FC } from 'react'
 
-const chipDivStyle = css`
-  margin-top: 10px;
+const titleStyle = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0.5rem;
+`
+
+const descriptionStyle = css`
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+`
+
+const contentStyle = css`
+  padding-bottom: 1rem;
+`
+
+const chipsStyle = css`
+  padding-top: 1rem;
 `
 const chipStyle = css`
-  margin-right: 5px;
+  margin-right: 0.5rem;
 `
 
 export type Props = {
@@ -28,16 +46,26 @@ const Article: FC<Props> = props => {
   return (
     <Card>
       <CardContent>
-        <Typography variant="h4">{props.title}</Typography>
-        <Typography variant="body1" color="textSecondary">
-          {props.description}
-        </Typography>
-        <Divider variant="middle" />
-        <div css={chipDivStyle}>
-          {props.tags.map(tag => (
-            <Chip key={tag.id} label={tag.name} css={chipStyle} />
-          ))}
+        <div css={contentStyle}>
+          <Typography variant="h5" css={titleStyle}>
+            {props.title}
+          </Typography>
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            css={descriptionStyle}
+          >
+            {props.description}
+          </Typography>
         </div>
+        <Divider variant="middle" />
+        {props.tags && (
+          <div css={chipsStyle}>
+            {props.tags.map(tag => (
+              <Chip key={tag.id} label={tag.name} css={chipStyle} />
+            ))}
+          </div>
+        )}
       </CardContent>
       <CardActions>
         <Button variant="contained" color="primary" fullWidth>

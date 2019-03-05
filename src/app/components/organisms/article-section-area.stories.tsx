@@ -31,14 +31,30 @@ const element = {
 // TODO:長いコンテンツの場合のレイアウトも確認する
 storiesOf('ArticleSectionArea', module)
   .add('1 article', () => (
-    <ArticleSectionArea color="blue" data={arrayRepeat(element, 1)} />
+    <ArticleSectionArea
+      title="Title"
+      color="blue"
+      data={arrayRepeat(element, 1)}
+    />
   ))
   .add('2 articles', () => (
-    <ArticleSectionArea color="blue" data={arrayRepeat(element, 2)} />
+    <ArticleSectionArea
+      title="Title"
+      color="blue"
+      data={arrayRepeat(element, 2)}
+    />
   ))
   .add('3 articles', () => (
-    <ArticleSectionArea color="blue" data={arrayRepeat(element, 3)} />
+    <ArticleSectionArea
+      title="Title"
+      color="blue"
+      data={arrayRepeat(element, 3)}
+    />
   ))
   .add('4 articles', () => (
-    <ArticleSectionArea color="blue" data={arrayRepeat(element, 4)} />
+    <ArticleSectionArea
+      title="Title"
+      color="blue"
+      data={arrayRepeat(element, 4)}
+    />
   ))
