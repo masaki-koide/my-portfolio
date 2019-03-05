@@ -7,11 +7,11 @@ module.exports = (baseConfig, env, config) => {
       {
         loader: require.resolve("babel-loader"),
         options: {
-          presets: ["@emotion/babel-preset-css-prop"]
+          presets: [
+            ['react-app', { flow: false, typescript: true }],
+            "@emotion/babel-preset-css-prop"
+          ]
         }
-      },
-      {
-        loader: require.resolve("awesome-typescript-loader")
       }
     ]
   });
