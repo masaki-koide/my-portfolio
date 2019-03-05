@@ -33,12 +33,12 @@ storiesOf('ArticleSectionArea', module)
   .add('1 article', () => (
     <ArticleSectionArea color="blue" data={arrayRepeat(element, 1)} />
   ))
-  .add('2 article', () => (
+  .add('2 articles', () => (
     <ArticleSectionArea color="blue" data={arrayRepeat(element, 2)} />
   ))
-  .add('3 article', () => (
+  .add('3 articles', () => (
     <ArticleSectionArea color="blue" data={arrayRepeat(element, 3)} />
   ))
-  .add('4 article', () => (
+  .add('4 articles', () => (
     <ArticleSectionArea color="blue" data={arrayRepeat(element, 4)} />
   ))
