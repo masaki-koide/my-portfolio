@@ -58,7 +58,9 @@ export default reducerWithInitialState<ArticlesState>(initialState)
     const qiitaItems = result.map(item => ({
       title: item.title,
       description: item.body.slice(0, descriptionLength),
-      tags: item.tags && item.tags.map((tag, i) => ({ id: String(i), ...tag }))
+      tags:
+        item.tags &&
+        item.tags.map((tag, i) => ({ id: String(i), ...tag })).slice(0, 5)
     }))
     return {
       ...state,
