@@ -18,10 +18,12 @@ export default () => (
           data.user.repositories.edges.map(repository => ({
             title: repository.node.name,
             description: repository.node.description,
-            tags: repository.node.languages.edges.map(language => ({
-              id: language.node.id,
-              name: language.node.name
-            }))
+            tags: repository.node.languages.edges
+              .map(language => ({
+                id: language.node.id,
+                name: language.node.name
+              }))
+              .slice(0, 5)
           }))
 
         return (
