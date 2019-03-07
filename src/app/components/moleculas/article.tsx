@@ -12,7 +12,7 @@ const titleStyle = css`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem !important;
 `
 
 const descriptionStyle = css`
@@ -31,6 +31,7 @@ const chipsStyle = css`
 `
 const chipStyle = css`
   margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 `
 
 export type Props = {

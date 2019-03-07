@@ -67,9 +67,9 @@ class ActionDispather {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-  return { actions: new ActionDispather(dispatch) }
-}
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  actions: new ActionDispather(dispatch)
+})
 
 export type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>
