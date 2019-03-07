@@ -1,6 +1,8 @@
 import Parser, { Items } from 'rss-parser'
 import fetcher from './fetcher'
 
+const itemLimit = 4
+
 export type QiitaItems = Array<{
   [key: string]: any
   id: string
@@ -13,7 +15,7 @@ export type QiitaItems = Array<{
 }>
 
 export function getQiitaItems(limit?: number): Promise<QiitaItems> {
-  const perPage = limit || 5
+  const perPage = limit || itemLimit
   return fetcher<QiitaItems>(
     `https://qiita.com/api/v2/authenticated_user/items?per_page=${perPage}`,
     {
@@ -25,12 +27,16 @@ export function getQiitaItems(limit?: number): Promise<QiitaItems> {
 }
 
 const parser = new Parser()
-function getFeedItems(feedUrl: string): Promise<Items[]> {
+function getFeedItems(feedUrl: string, limit?: number): Promise<Items[]> {
   const corsProxy = 'https://cors-anywhere.herokuapp.com/'
+  const perPage = limit || itemLimit
   return parser
     .parseURL(corsProxy + feedUrl)
     .then<Items[]>(
-      feeds => feeds.items || Promise.reject(new Error('Not found feed'))
+      feeds =>
+        feeds.items
+          ? feeds.items.slice(0, perPage)
+          : Promise.reject(new Error('Not found feed'))
     )
     .catch(err => Promise.reject(err))
 }
