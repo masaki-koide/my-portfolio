@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
 import { Grid, Typography } from '@material-ui/core'
 import { FC } from 'react'
-import Article, { Props as ArticleProps } from '../moleculas/article'
+import Article, { Props as ArticleProps } from '../molecules/article'
 import SectionArea from './section-area'
 
 const sectionStyle = css`

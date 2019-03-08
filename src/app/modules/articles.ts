@@ -2,7 +2,7 @@ import { Items } from 'rss-parser'
 import { actionCreatorFactory } from 'typescript-fsa'
 import { reducerWithInitialState } from 'typescript-fsa-reducers'
 import { QiitaItems } from '~/api/articles'
-import { Props as Article } from '~/components/moleculas/article'
+import { Props as Article } from '~/components/molecules/article'
 
 export type ArticlesState = {
   count: number

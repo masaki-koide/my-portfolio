@@ -1,6 +1,6 @@
 import * as React from 'react'
 import App from '~/components/App'
-import GitHubItems from '~/components/moleculas/GitHubItems'
+import GitHubItems from '~/components/molecules/GitHubItems'
 import ArticleSectionArea from '~/components/organisms/article-section-area'
 import { Props } from '~/pages/about'
 
