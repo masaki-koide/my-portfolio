@@ -1,6 +1,6 @@
 // import { color, withKnobs } from '@storybook/addon-knobs'
 import { storiesOf } from '@storybook/react'
-import SectionArea from './section-area'
+import SectionArea from '../molecules/section-area'
 
 storiesOf('SectionArea', module)
   // .addDecorator(withKnobs)
