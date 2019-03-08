@@ -16,7 +16,7 @@ export const client = new ApolloClient({
 export const query = gql`
   query {
     user(login: "masaki-koide") {
-      repositories(first: 5, orderBy: { field: CREATED_AT, direction: DESC }) {
+      repositories(first: 4, orderBy: { field: CREATED_AT, direction: DESC }) {
         edges {
           node {
             id
