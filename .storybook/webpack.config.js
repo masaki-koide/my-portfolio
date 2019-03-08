@@ -1,6 +1,6 @@
 const path = require("path");
 
-module.exports = (baseConfig, env, config) => {
+module.exports = ({ config }) => {
   config.module.rules.push({
     test: /\.tsx?$/,
     use: [
@@ -8,8 +8,8 @@ module.exports = (baseConfig, env, config) => {
         loader: require.resolve("babel-loader"),
         options: {
           presets: [
-            ['react-app', { flow: false, typescript: true }],
-            "@emotion/babel-preset-css-prop"
+            ["react-app", { flow: false, typescript: true }],
+            "@emotion/babel-preset-css-prop",
           ]
         }
       }
