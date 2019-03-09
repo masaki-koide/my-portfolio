@@ -1,7 +1,7 @@
 import { css } from '@emotion/core'
 import { Grid, Typography } from '@material-ui/core'
 import { FC } from 'react'
-import SectionArea from './section-area'
+import SectionArea from '~/components/molecules/section-area'
 
 const sectionStyle = css`
   background-image: url(https://placehold.jp/1920x1080.png);

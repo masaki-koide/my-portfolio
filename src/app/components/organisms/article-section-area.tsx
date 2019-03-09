@@ -1,8 +1,8 @@
 import { css } from '@emotion/core'
 import { Grid, Typography } from '@material-ui/core'
 import { FC } from 'react'
+import SectionArea from '~/components/molecules/section-area'
 import Article, { Props as ArticleProps } from '../molecules/article'
-import SectionArea from './section-area'
 
 const sectionStyle = css`
   padding: 4rem 2rem;
