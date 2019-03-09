@@ -5,6 +5,7 @@ import SectionArea from '~/components/molecules/section-area'
 
 const sectionStyle = css`
   background-image: url(https://placehold.jp/1920x1080.png);
+  background-size: cover;
   height: 100vh;
 `
 
