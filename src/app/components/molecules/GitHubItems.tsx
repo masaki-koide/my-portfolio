@@ -28,7 +28,11 @@ export default () => (
 
         return (
           mappedData && (
-            <ArticleSectionArea title="GitHub" color="gray" data={mappedData} />
+            <ArticleSectionArea
+              title="GitHub"
+              color="white"
+              data={mappedData}
+            />
           )
         )
       }}
