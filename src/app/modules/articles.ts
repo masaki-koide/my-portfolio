@@ -6,16 +6,16 @@ import { Props as Article } from '~/components/molecules/article'
 
 export type ArticlesState = {
   count: number
-  qiitaItems: Article[]
-  noteItems: Article[]
-  hatenaItems: Article[]
+  qiitaItems?: Article[]
+  noteItems?: Article[]
+  hatenaItems?: Article[]
 }
 
 const initialState: ArticlesState = {
   count: 0,
-  qiitaItems: [],
-  noteItems: [],
-  hatenaItems: []
+  qiitaItems: undefined,
+  noteItems: undefined,
+  hatenaItems: undefined
 }
 
 const actionCreator = actionCreatorFactory('ARTICLES')
