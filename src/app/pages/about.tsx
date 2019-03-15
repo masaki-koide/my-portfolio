@@ -35,7 +35,7 @@ class ActionDispather {
 
   public getQiitaItems = () => {
     this.dispatch(getQiitaItems.started())
-    API.getQiitaItems()
+    return API.getQiitaItems()
       .then(result => {
         this.dispatch(getQiitaItems.done({ result }))
       })
@@ -46,7 +46,7 @@ class ActionDispather {
 
   public getNoteItems = () => {
     this.dispatch(getNoteItems.started())
-    API.getNoteItems()
+    return API.getNoteItems()
       .then(result => {
         this.dispatch(getNoteItems.done({ result }))
       })
@@ -57,7 +57,7 @@ class ActionDispather {
 
   public getHatenaBlogItems = () => {
     this.dispatch(getHatenaItems.started())
-    API.getHatenaBlogItems()
+    return API.getHatenaBlogItems()
       .then(result => {
         this.dispatch(getHatenaItems.done({ result }))
       })
